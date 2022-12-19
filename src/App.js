@@ -5,7 +5,7 @@ import Context from "./store/Context";
 import Loader from "./components/Layout/Loader";
 
 const UserForm = React.lazy(()=>import("./components/Auth/UserForm"));
-
+const Home = React.lazy(()=>import("./components/Home/Home"))
 const App = () => {
   
   const authCtx = useContext(Context)
@@ -18,7 +18,7 @@ const App = () => {
         <Switch>
           <Route exact path="/">
             {!authCtx.isLoggedIn&&<UserForm/>}
-            <></>
+            {authCtx.isLoggedIn&&<Home/>}
           </Route>
           <Route exact path="/auth">
             <UserForm />
