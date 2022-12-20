@@ -4,48 +4,49 @@ import Context from '../../store/Context'
 
 const Profile = (props) => {
   const authCtx = useContext(Context);
-  const fullNameRef = useRef();
-  const UrlRef = useRef();
-
   const [alert, setAlert] = useState(<></>);
 
+  const fullNameRef = useRef();
+  const UrlRef = useRef();
+  
   const updateProfileHandler = async(e) => {
     e.preventDefault();
     try{
-    if(!fullNameRef.current.value || !UrlRef.current.value){
-        throw new Error('Fill out all the fields');
-    }
-     const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCi0kY1RZHcf880mPQSCgIn5301HEk1jyo',{
-        method:'POST',
-        body:JSON.stringify({
-          idToken:authCtx.logInToken,
-          displayName: fullNameRef.current.value,
-          photoUrl: UrlRef.current.value,
-          returnSecureToken: true
-        }),
-        headers:{
-          'Content-Type':'application/json'
+        if(!fullNameRef.current.value || !UrlRef.current.value){
+            throw new Error('Fill out all the fields');
         }
-    })
+        const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCi0kY1RZHcf880mPQSCgIn5301HEk1jyo',{
+            method:'POST',
+            body:JSON.stringify({
+            idToken:authCtx.logInToken,
+            displayName: fullNameRef.current.value,
+            photoUrl: UrlRef.current.value,
+            returnSecureToken: true
+            }),
+            headers:{
+            'Content-Type':'application/json'
+            }
+        })
 
-    const data = await res.json();
-    
-    fullNameRef.current.value = '';
-    UrlRef.current.value = '';
-    if(res.ok){
-        setAlert(<Alert variant="success">Your details have been updated :)</Alert>)
-        props.setComplete(true);
-        setTimeout(()=>{setAlert(<></>)}, 3000)
-    }else{
-        throw new Error(data.error.errors[0].message);
-    }
+        const data = await res.json();
+        
+        fullNameRef.current.value = '';
+        UrlRef.current.value = '';
+        if(res.ok){
+            setAlert(<Alert variant="success">Your details have been updated :)</Alert>)
+            props.setComplete(true);
+            setTimeout(()=>{setAlert(<></>)}, 3000)
+        }else{
+            throw new Error(data.error.errors[0].message);
+        }
 
     }catch(err){
         setAlert(<Alert variant="danger">{err.message}</Alert>)
         setTimeout(()=>{setAlert(<></>)}, 3000)
     }
-
   }
+
+  
   return (
     <>
       <Form className='w-50 p-2 my-2 mx-auto border-bottom border-success' onSubmit={updateProfileHandler}>
@@ -61,7 +62,7 @@ const Profile = (props) => {
             </svg>
             Full Name
           </Form.Label>
-          <Form.Control type="text" id="fullName" ref={fullNameRef} />
+          <Form.Control defaultValue={props.fullName} type="text" id="fullName" ref={fullNameRef} />
         </Form.Group>
         <Form.Group className='mb-3'>
           <Form.Label>
@@ -71,7 +72,7 @@ const Profile = (props) => {
             </svg>
             Photo URL
           </Form.Label>
-          <Form.Control type="text" id="photoURL" ref={UrlRef}/>
+          <Form.Control  defaultValue={props.photo} type="text" id="photoURL" ref={UrlRef}/>
         </Form.Group>
         <Button className="mb-2 " type="submit" variant="success">
           Update
