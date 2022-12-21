@@ -3,10 +3,12 @@ import { Alert, Container } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import Context from "../../store/Context";
 import Profile from "../Profile/Profile";
+import Verify from "../Profile/Verify";
 
 const Home = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [complete, setComplete] = useState(false);
+  const [verified, setVerified] = useState(false);
   const [fullName, setFullName] = useState('');
   const [photo, setPhoto] = useState('');
   const authCtx = useContext(Context);
@@ -33,10 +35,15 @@ const Home = () => {
         else{
             throw new Error("Some problem occured while fetching your details")
         }
+
+        if(data.users[0].emailVerified){
+          setVerified(true);
+        }
     }catch(err){
         setComplete(false);
     }
   },[authCtx.logInToken])
+
 
   useEffect(()=>{
     loadProfile();
@@ -44,6 +51,7 @@ const Home = () => {
 
   return (
     <Container style={{ marginTop: "5rem" }}>
+      {!verified&&<Verify setVerified = {setVerified}/>}
       <div className="d-flex justify-content-between text-success border border-success my-2 p-2">
         <h3>Welcome to expense tracker!</h3>
         {complete ? (
