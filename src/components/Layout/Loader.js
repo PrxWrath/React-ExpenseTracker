@@ -1,9 +1,9 @@
 import React from 'react'
 import classes from './Loader.module.css'
 
-const Loader = () => {
+const Loader = (props) => {
   return (
-    <div className={`${classes.loader} mx-auto`}></div>
+    <div className={`${classes.loader} mx-auto ${props.className}`}></div>
   )
 }
 
