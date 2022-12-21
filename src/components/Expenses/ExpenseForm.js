@@ -1,20 +1,35 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Button, FloatingLabel, Form } from 'react-bootstrap'
+import Loader from '../Layout/Loader'
 
 const ExpenseForm = (props) => {
     
     const amountRef = useRef();
     const descRef = useRef();
     const categoryRef = useRef();
-
-    const addExpenseHandler = () => {
+    const [loading, setLoading] = useState(false);
+    
+    const addExpenseHandler = async() => {
+        setLoading(true);
         let expense = {
-            id: `expense ${Math.random(6)}`,
+            id: `expense${new Date().getTime()}`,
             amount: amountRef.current.value,
             description: descRef.current.value,
-            category: categoryRef.current.value
+            category: categoryRef.current.value,
+            createdAt: new Date()
         }
-        props.setExpenses(prev=>[...prev,expense])
+
+        const res = await fetch(`https://expense-tracker-4ce23-default-rtdb.firebaseio.com/expenses/${expense.id}.json`,{
+            method:'PUT',
+            body:JSON.stringify(expense),
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        if(res.ok){
+            props.setExpenses(prev=>[expense,...prev])
+            setLoading(false);
+        }
     }
     return (
     <>
@@ -38,8 +53,9 @@ const ExpenseForm = (props) => {
                 <Button onClick={addExpenseHandler} variant='success' size='lg'>+ Add Expense</Button>
             </div>
         </Form>
+        {loading&&<Loader className='my-3'/>}
     </>
   )
 }
 
-export default ExpenseForm
+export default React.memo(ExpenseForm);
