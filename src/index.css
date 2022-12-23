@@ -13,3 +13,7 @@ body {
   background-color: #3f3f3f;
 }
 
+.app-interface{
+  height: 110vh;
+  margin: 0;
+}

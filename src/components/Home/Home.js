@@ -50,7 +50,7 @@ const Home = () => {
   }, [loadProfile])
 
   return (
-    <Container style={{ marginTop: "5rem" }}>
+    <Container style={{ paddingTop: "5rem" }}>
       {!verified&&<Verify setVerified = {setVerified}/>}
       <div className="d-flex justify-content-between text-success border border-success my-2 p-2">
         <h3>Welcome to expense tracker!</h3>

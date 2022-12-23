@@ -11,9 +11,10 @@ const Expenses = React.lazy(()=>import("./components/Expenses/Expenses"));
 const App = () => {
   
   const isLoggedIn = useSelector(state=>state.auth.isLoggedIn);
+  const theme = useSelector(state=>state.theme.themeClass);
 
   return (
-    <>
+    <div className={`app-interface ${theme}`}>
       <Header/>
       
       <Suspense fallback={<Loader/>}>
@@ -31,7 +32,7 @@ const App = () => {
           </Route>
         </Switch>
       </Suspense>
-    </>
+    </div>
   );
 };
 

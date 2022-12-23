@@ -10,6 +10,7 @@ const ExpenseForm = (props) => {
     const categoryRef = useRef();
     const [loading, setLoading] = useState(false);
     const email = useSelector(state=>state.auth.loginEmail);
+    const theme = useSelector(state=>state.theme.theme);
     
     if(props.edited){
         document.getElementById('amount').value = props.edited.amount;
@@ -68,16 +69,16 @@ const ExpenseForm = (props) => {
     
     return (
     <>
-        <Form className='my-3 mx-auto w-50 rounded border border-success'>
+        <Form className={`my-3 mx-auto w-50 rounded border border-success ${theme==='dark'?'text-warning':''} `}>
             <h3 className='w-100 bg-success text-center mb-3 text-light rounded-top'>{props.edited?'Edit Expense':'Add Expense'}</h3>
             <FloatingLabel controlId='amount' className='mb-3 mx-auto w-75' label='Amount (Rs.)'>
-                <Form.Control type='number' min={1} step={1} ref={amountRef}/>
+                <Form.Control className = {theme==='dark'?'bg-dark border border-warning text-warning':''} type='number' min={1} step={1} ref={amountRef}/>
             </FloatingLabel>
             <FloatingLabel controlId='description' className='mb-3 mx-auto w-75' label='Description'>
-                <Form.Control type='text' ref={descRef}/>
+                <Form.Control className = {theme==='dark'?'bg-dark border border-warning text-warning':''} type='text' ref={descRef}/>
             </FloatingLabel>
             <FloatingLabel controlId='category' className='mb-3 mx-auto w-75' label='Category'>
-                <Form.Select ref={categoryRef}>
+                <Form.Select className = {theme==='dark'?'bg-dark border border-warning text-warning':''} ref={categoryRef}>
                     <option value="Groceries">Groceries</option>
                     <option value="Bills">Bills</option>
                     <option value="Transport">Transport</option>

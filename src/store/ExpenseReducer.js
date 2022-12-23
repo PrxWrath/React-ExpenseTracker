@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-const initialState = {expenses:[], total:0};
+const initialState = {expenses:[], total:0 };
 
 const expenseSlice = createSlice({
     name:'expenses',
@@ -14,7 +14,7 @@ const expenseSlice = createSlice({
        },
        updateTotal(state,action){
         state.total = action.payload;
-       } 
+       },
     }
 })
 
