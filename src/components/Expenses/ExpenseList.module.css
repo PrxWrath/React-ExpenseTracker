@@ -1,0 +1,11 @@
+.expenseList{
+    overflow: hidden;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 18rem;
+}
+
+.expenseList::-webkit-scrollbar{
+    display: none;
+}
