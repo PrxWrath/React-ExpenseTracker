@@ -24,18 +24,6 @@ const expenseSlice = createSlice({
         state.loaded = false;
        },
 
-       updateExpense(state, action){
-        let expenseToUpdate = state.expenses.find(expense=>expense.id===action.payload.id)
-        expenseToUpdate.id = action.payload.id
-        expenseToUpdate.amount = action.payload.amount
-        expenseToUpdate.description = action.payload.description
-        expenseToUpdate.category = action.payload.category
-        expenseToUpdate.createdAt = action.payload.createdAt
-        
-        state.total = state.total-action.payload.oldAmount
-        state.total += action.payload.amount 
-       },
-
        load(state,action){
         state.total = action.payload.total;
         state.expenses = action.payload.expenses;

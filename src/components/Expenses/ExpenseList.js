@@ -16,6 +16,7 @@ const ExpenseList = (props) => {
             description:expense.description,
             category:expense.category
         })
+        dispatch(expenseActions.removeExpense(expense));
     }
 
     const deleteExpenseHandler = (expense) => {

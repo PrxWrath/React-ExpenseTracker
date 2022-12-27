@@ -33,14 +33,12 @@ const ExpenseForm = (props) => {
             
             
         }else{
-            const oldAmount = Number(amountRef.current.value);
-            dispatch(expenseActions.updateExpense({
+            dispatch(expenseActions.addExpense({
                 id:props.edited.id,
                 amount:Number(amountRef.current.value),
                 description:descRef.current.value,
                 category: categoryRef.current.value,
                 createdAt:new Date(),
-                oldAmount
             }))
             props.setEdited(null);
             amountRef.current.value = '';
